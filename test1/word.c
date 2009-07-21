@@ -1,0 +1,218 @@
+#include "word.h"
+
+list word_list[52];
+int flag_rep = 0;
+int case_flag;
+
+void sys_init(void)
+
+{
+	int i;
+
+	for(i = 0; i < 52;i++){
+		initlist(&word_list[i]);
+		word_list[i].data = i;
+	}
+}
+
+char read_word(FILE *fp, char str[])
+{
+	int i;
+	char ch;
+	char temp[MAXLENGTH] = "\0";
+
+	i = 0;
+	while(1){
+		ch = fgetc(fp);
+		if(ch == -1)
+			return '#';
+		if((ch >= 'A' && ch <= 'Z')
+		   || (ch >= 'a' && ch <= 'z')
+		   || (ch == '-')) {
+			temp[i] = ch;
+			i++;
+			continue;
+		} else if (ch == 0x0A){
+			if (temp[i-1] == '-'){
+				i--;
+				continue;
+			} else 
+				break;
+		} else if (i == 0) {
+			continue;
+		} else {
+			break;
+		}
+		
+	}
+
+	strcpy(str,temp);
+	return temp[0];
+}
+	
+
+
+/*************88
+void word_detect(char str[])
+{
+	static int flag = 0;          //flag of each situation
+	int i;
+
+	
+	if(flag == 1){
+		
+	for(i = 0; str[i] != '\n';i++);
+	i--;
+	if(str[i] == '-'){
+		flag = 1;
+	}
+********/
+
+
+//only available for char list
+int list_binsrch(plist list, char *data)
+{
+	int low, mid, high;
+	int temp;
+	str_pword p;
+
+	low = 2;
+	high = list_length(list);
+
+	while(low <= high){
+		mid = (low + high) / 2;
+		p = get_data(list,mid);
+		temp = strcmp(data,p->word);
+		if (temp == 0){
+			flag_rep = 1;
+			return mid;
+		} else if (temp < 0)
+			high = mid - 1;
+		else 
+			low = mid + 1;
+	}
+	p = get_data(list,mid);
+	temp = strcmp(data,p->word);
+	if(temp < 0)
+		mid--;
+
+	return mid;
+}
+
+
+void add_to_list(FILE *fp)
+{
+	int i;
+	int index;
+	int length;
+	char prefix;
+	char str[MAXLENGTH];
+	str_pword pword,p;
+	char except_word[3][10] = {"you", "to", "and"};
+
+
+
+	while (1) {
+		prefix = read_word(fp,str);
+		if (prefix == '#')
+			break;
+		if ((pword=(str_pword)malloc(sizeof(str_word)))==NULL){
+			printf("no enough memory to allocte bufer.\n");
+			exit(1);
+		}
+		
+		strcpy(pword->word,str);
+		pword->freq = 1;
+
+		//	printf("%s\t", pword->word);
+
+		if((prefix - 'A') > 31) {
+			index = prefix - 'a' + 25;
+		} else {
+			index = prefix - 'A';
+		}
+
+		length = list_length(&word_list[0]);
+
+		if (length > 1){
+			index = list_binsrch(&word_list[0], pword->word);
+			//	printf("index is %d\t",index);
+			if (flag_rep == 1) {
+				p = get_data(&word_list[0], index);
+				p->freq++;
+				flag_rep = 0;
+				free(pword);
+			} else
+				insert_data(&word_list[0], index, pword);
+
+		} else {
+			index = 1;
+			insert_data(&word_list[0], index, pword);
+		}
+
+
+	}
+
+	if(case_flag == 1){
+		sort_byfreq();
+	}
+	printf_word(100, except_word);
+	free_list(&word_list[0]);
+	length = list_length(&word_list[0]);
+	printf("%d",length);
+		
+
+}
+
+void sort_byfreq(void)
+{
+	int i, j, n, change;
+	str_pword p1, p2, p3;
+	str_word p4 = {"hello", 5};
+
+	change = 1;
+	n = list_length(&word_list[0]);
+	p3 = (str_pword)malloc(sizeof(str_word));
+	for (i = 2; i < n && change; i++){
+		change = 0;
+		for (j = 2; j <= n - 1;j++){
+			p1 = get_data(&word_list[0], j);
+			p2 = get_data(&word_list[0], j + 1);
+			if((p1->freq) < (p2->freq)) {
+				*p3 = *p1;
+				*p1 = *p2;
+				*p2 = *p3;
+				change = 1;
+			}
+		}
+	}
+}
+
+
+//print all the word in the text file
+void printf_word(int percent, char **str)
+{
+	int i, j, k, m;
+	int length;
+	str_pword p;
+
+	k = 0;
+	for(i = 2; i <= list_length(&word_list[0]); i++) {
+		p = get_data(&word_list[0], i);
+		m = 1;
+		/*********
+		for (j = 0; j < 3; j++, str++) {
+			if((strcmp(p->word, str)) == 0) {
+				m = 0;
+				break;
+			}
+		}
+		**************/
+		if (m == 1) {
+			printf("%-20s\t%4d;\n", p->word, p->freq);
+			k++;
+		}
+	
+		free(p);
+	}
+}

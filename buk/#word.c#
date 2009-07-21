@@ -1,0 +1,70 @@
+#include "word.h"
+
+char read_word(FILE *fp, char str[])
+{
+	int i;
+	char ch;
+	char temp[20] = "\0";
+
+	i = 0;
+	while(1){
+		ch = fgetc(fp);
+		if((ch >= 'A' && ch <= 'Z')
+		   || (ch >= 'a' && ch <= 'z')
+		   || (ch == '-')) {
+			temp[i] = ch;
+			i++;
+			continue;
+		} else if (ch == 0x0A){
+			if (temp[i-1] == '-'){
+				i--;
+				continue;
+			} else 
+				break;
+		} else if (i == 0) {
+			continue;
+		} else {
+			break;
+		}
+		
+	}
+
+	strcpy(str,temp);
+	return temp[0];
+}
+	
+
+
+/*************88
+void word_detect(char str[])
+{
+	static int flag = 0;          //flag of each situation
+	int i;
+
+	
+	if(flag == 1){
+		
+	for(i = 0; str[i] != '\n';i++);
+	i--;
+	if(str[i] == '-'){
+		flag = 1;
+	}
+********/
+
+
+void add_to_list(FILE *fp)
+{
+	int i;
+	char str[20];
+
+	struct 
+
+
+	for(i = 0; i < 20; i++){
+		read_word(fp,str);
+		
+
+		printf("%s\n", str);
+	}
+}
+	
