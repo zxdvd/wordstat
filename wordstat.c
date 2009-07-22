@@ -48,22 +48,22 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
-
-	printf("input:%s\n",argv[optind]);
 	filename = argv[optind];              //get the inputfile
-	if((fp = fopen(filename,"rt")) == NULL){
-		printf("can't open file, press"
-		       " any key to exit\n");
-		exit(1);
-	}
-	/******
-	for(i = 0; i < 15; i++){
-		//fscanf(fp,"%s",string);
-		read_word(fp,string);
-		printf("%s\n", string);
-		//printf("%c",string[i]);
-	}
-	*********/
+	printf("%d\n",filename);
+
+	
+	if(argv[optind] != NULL) {
+		printf("input:%s\n",filename);
+		if((fp = fopen(filename,"rt")) == NULL){
+			printf("can't open file, press"
+			       " any key to exit\n");
+			exit(1);
+		}
+		} else {
+		printf("oknull\n");
+		fp = NULL;
+}
+
 
 	sys_init();	
 	add_to_list(fp);
