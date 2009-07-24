@@ -212,6 +212,15 @@ void add_to_list(FILE *fp)
 		
 
 }
+/***********
+int qk_pass(plist list, int low, int high)
+{
+	plist p;
+	str_pword pword;
+	char *pivot;
+
+	p = list;
+***************/	
 
 void sort_byfreq(void)
 {
@@ -225,7 +234,8 @@ void sort_byfreq(void)
 		change = 0;
 		current_list = &word_list[0];
 		current_list = current_list->next;
-		for (j = 2; j <= n - 1;j++){
+		//for (j = 2; j <= n - 1;j++){
+		while (1) {
 			p1 = current_list->data;
 			//printf("%s\n",p1->word);
 			current_list = current_list->next;
@@ -236,6 +246,8 @@ void sort_byfreq(void)
 				*p2 = *p3;
 				change = 1;
 			}
+			if(current_list->next == &word_list[0])
+				break;
 		}
 	}
 }
