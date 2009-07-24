@@ -12,15 +12,13 @@ int main(int argc, char *argv[])
 	const struct option long_options [] = {
 		{"help", 0, NULL, 'h'},
 		{"version", 0, NULL, 'v'},
-		{"a", 0, NULL, 'a'},
-		{"b", 0, NULL, 'b'},
+		{"aaa", 0, NULL, 'a'},
+		{"bbb", 0, NULL, 'b'},
 		{NULL, 0, NULL, 0}
 	};
 
 
-	int i;
 	FILE *fp;
-	char *str;
 	char *filename;
 
 
@@ -49,18 +47,17 @@ int main(int argc, char *argv[])
 		}
 	}
 	filename = argv[optind];              //get the inputfile
-	printf("%d\n",filename);
+	//printf("%s\n",filename);
 
 	
 	if(argv[optind] != NULL) {
 		printf("input:%s\n",filename);
 		if((fp = fopen(filename,"rt")) == NULL){
-			printf("can't open file, press"
+			fprintf(stderr, "can't open file, press"
 			       " any key to exit\n");
 			exit(1);
 		}
 		} else {
-		printf("oknull\n");
 		fp = NULL;
 }
 

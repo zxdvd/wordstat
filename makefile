@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -pg
+CFLAGS = -Wall #-pg
 
 
 OBJECTS = wordstat.o word.o list.o

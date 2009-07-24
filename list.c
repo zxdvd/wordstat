@@ -7,6 +7,7 @@ int initlist(plist list)
 {
 	list->prev = list;
 	list->next = list;
+	return 0;
 }
 
 //计算链表节点总数
@@ -176,7 +177,7 @@ void free_list(plist list)
 
 /************************************
 
-************************************/
+************************************
 void *sort_list(plist list)
 {
 	plist p = list;
@@ -199,7 +200,7 @@ void *sort_list(plist list)
 	p_data = p_data - i;
 	//list->data = *(p_data + 1);
 	//list->next->data = *(p_data + 3);
-	/***********
+	***********
 	for(i = 0; i < list_length(list) - 1; i++)
 	{
 		for(j = 0; j <= list_length(list) - 2;j++)
@@ -214,7 +215,7 @@ void *sort_list(plist list)
 	      	}
 	}
 
-	****************/
+	****************
 	{
 		*temp = *(p_data+1);
 		*(p_data + 2) = *(p_data + 1);
@@ -222,7 +223,7 @@ void *sort_list(plist list)
 		
 	}
 
-	/*********	
+	*********	
 	p = list;
 	for(i = 0; i < list_length(list); i++)
         {
@@ -230,6 +231,7 @@ void *sort_list(plist list)
 		p = p->next;
 		p_data++;
 	}
-	************/
+	************
 	
 }
+**************/

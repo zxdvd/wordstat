@@ -27,8 +27,8 @@ void free_node(plist node);
 
 void free_list(plist list);
 
-void *sort_list(plist list);
+//void *sort_list(plist list);
 
-int cmp_char(const void *a, const void *b);
+//int cmp_char(const void *a, const void *b);
 
 #endif
